@@ -34,8 +34,14 @@ class JadwalsUser extends Model
                 $query->where('jadwal_id', $search);
             });
         });
+        // $query->when($fillters['id'] ?? false, function ($query, $search) {
+        //     return $query->where(function ($query) use ($search) {
+        //         $query->where('psikolog_id', $search);
+        //     });
+        // });
+
         $query->when($fillters['id'] ?? false, function ($query, $search) {
-            return $query->where(function ($query) use ($search) {
+            return $query->whereHas('psychologist', function($query) use ($search) {
                 $query->where('psikolog_id', $search);
             });
         });
