@@ -38,7 +38,6 @@ class JadwalController extends Controller
             'title' => 'Labour Admin',
             'active' => 'psychotest-schedule',
             'path' => '/psychotest/schedule',
-            'psychologist' => Psychologist::all(),
         ]);
     }
 

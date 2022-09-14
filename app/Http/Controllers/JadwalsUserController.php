@@ -39,7 +39,7 @@ class JadwalsUserController extends Controller
             'active' => 'psychotest-participant',
             'path' => '/psychotest/participant',
             'user' => User::all(),
-            'psychotest' => Jadwal::all(),
+            'psychotest' => Jadwal::latest()->filter(['id' => auth()->user()->id])->get(),
         ]);
     }
 
