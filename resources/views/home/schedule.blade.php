@@ -35,23 +35,10 @@
                 </button>
             </div>
         @endif
-
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link {{ $status == 'unfinished' ? 'active' : '' }}" href="{{ $path.'?status=unfinished' }}">Proses</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {{ $status == 'finished' ? 'active' : '' }}" href="{{ $path.'?status=finished' }}">Selesai</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {{ $status == 'cancel' ? 'active' : '' }}" href="{{ $path.'?status=cancel' }}">Dibatalkan</a>
-            </li>
-          </ul>
-
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Tabel Jadwal Psikotest</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Jadwal Psikotest {{ auth()->user()->name }}</h6>
                     <a href="{{ $path }}/create" class="btn btn-primary">Tambah Data</a>
                 </div>
             </div>
@@ -61,28 +48,24 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Lokasi</th>
-                                    <th>Tanggal</th>
-                                    <th>Jam</th>
+                                    <th>NO</th>
+                                    <th>Jenis Test</th>
+                                    <th>Waktu</th>
                                     <th>Kuota</th>
-                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @foreach ($data as $key => $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->location }}</td>
-                                        <td>{{ $item->date }}</td>
-                                        <td>{{ $item->time }}</td>
-                                        <td>{{ $item->quota }}</td>
-                                        <td>{{ $item->status }}</td>
+                                        <td>{{ $key + $data->firstItem() }}</td>
+                                        <td>{{ $item->jenis_test }}</td>
+                                        <td>{{ $item->waktu }}</td>
+                                        <td>{{ $item->kuota }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <form action="/psychotest/participant" method="get">
-                                                    <input type="hidden" name="psychotest_id" value="{{ $item->id }}">
+                                                    <input type="hidden" name="psychotest" value="{{ $item->id }}">
                                                     <button class="btn btn-primary" type="submit">
                                                         Detail
                                                     </button>
