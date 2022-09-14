@@ -41,7 +41,7 @@ class JadwalsUser extends Model
         // });
 
         $query->when($fillters['id'] ?? false, function ($query, $search) {
-            return $query->whereHas('psychologist', function($query) use ($search) {
+            return $query->whereHas('psychotest', function($query) use ($search) {
                 $query->where('psikolog_id', $search);
             });
         });
