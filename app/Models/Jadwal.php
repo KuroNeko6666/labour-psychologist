@@ -33,7 +33,7 @@ class Jadwal extends Model
         });
         $query->when($fillters['id'] ?? false, function ($query, $search) {
             return $query->where(function ($query) use ($search) {
-                $query->where('id', $search);
+                $query->where('psikolog_id', $search);
             });
         });
     }
