@@ -24,7 +24,7 @@
                 <form action="{{ $path }}/{{ $data->id }}" method="post">
                     @csrf
                     @method('put')
-                    <input name="psikolog_id" type="hidden" value="{{ $data->psikolog_id }}">
+                    <input name="psikolog_id" type="hidden" value="{{ auth()->user()->id }}">
                     <div class="form-group row">
                         <label for="jenis_test" class="col-sm-2 col-form-label">Jenis Test</label>
                         <div class="col-sm-10">
