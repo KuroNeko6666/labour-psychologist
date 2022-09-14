@@ -13,9 +13,7 @@ class HomeController extends Controller
         return view('home.index', [
             'active' => 'dashboard',
             'title' => 'Labour | Psikotest',
-            'schedule_finished' => Psychotest::latest()->filter(['psychologist' => $id,'status' => 'finished'])->get(),
-            'schedule_unfinished' => Psychotest::latest()->filter(['psychologist' => $id,'status' => 'unfinished'])->get(),
-            'schedule_cancel' => Psychotest::latest()->filter(['psychologist' => $id,'status' => 'cancel'])->get(),
+            'jadwal' => Jadwal::latest()->filter(['id' => $id])->get(),
             'participant' => PsychotestParticipant::latest()->filter(['psychologist' => $id,'status' => 'unfinished'])->get()
         ]);
     }

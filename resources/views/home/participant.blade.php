@@ -7,9 +7,6 @@
         <h1 class="h3 mb-4 text-gray-800">Peserta Psikotest</h1>
 
         <form action="{{ $path }}">
-            @if (request('psychotest_id'))
-                <input type="hidden" name="psychotest_id" value="{{ request('psychotest_id') }}">
-            @endif
             <div class="input-group mb-3">
                 <input name="search" type="text" class="form-control bg-white border-0 " placeholder="Cari Data.." aria-label="Cari Data.." aria-describedby="button-addon2">
                 <div class="input-group-append">
@@ -42,13 +39,8 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Tabel Peserta Psikotest</h6>
-                    <form action="{{ $path }}/create">
-                        @if (request('psychotest_id'))
-                            <input type="hidden" name="psychotest_id" value="{{ request('psychotest_id') }}">
-                        @endif
-                        <button type="submit" class="btn btn-primary">Tambah Data</button>
-                    </form>
+                    <h6 class="m-0 font-weight-bold text-primary">Peserta Psikotest {{ auth()->user()->name }}</h6>
+                    <a href="{{ $path }}/create{{ request('psychotest') ? '?psychotest='.request('psychotest') : '' }}" class="btn btn-primary">Tambah Data</a>
                 </div>
             </div>
             <div class="card-body">
@@ -57,32 +49,22 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>ID Psikotest</th>
+                                    <th>NO</th>
                                     <th>ID Peserta</th>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @foreach ($data as $key => $item)
                                     <tr>
-                                        <td>{{ $item->psychotest_id }}</td>
-                                        <td>{{ $item->user_id }}</td>
+                                        <td>{{ $key + $data->firstItem() }}</td>
+                                        <td>{{ $item->users_id }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->email }}</td>
-                                        <td>{{ $item->status }}</td>
                                         <td>
                                             <div class="d-flex">
-                                                <form action="{{ $path }}/{{ $item->id }}/edit" method="get">
-                                                    @if (request('psychotest_id'))
-                                                    <input type="hidden" name="psychotest_id" value="{{ request('psychotest_id') }}">
-                                                    @endif
-                                                    <button class="btn btn-primary" type="submit">
-                                                        <i class="fas fa-fw fa-pen"></i>
-                                                    </button>
-                                                </form>
                                                 <a class="nav-link" href="#"
                                                     data-target="#deleteModal{{ $item->id }}" data-toggle="modal">
                                                     <i class="fas fa-fw fa-trash text-danger"></i>
@@ -95,12 +77,10 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    @endif
-                    @if ($data->count() == 0 && request('psychotest_id'))
-                        <p class="text-center">Tidak ada peserta, silahkan untuk menambahkan</p>
-                    @endif
-                    @if ($data->count() == 0 && !request('psychotest_id'))
+                    @else
+
                         <p class="text-center">Tidak ada data</p>
+
                     @endif
                 </div>
             </div>
